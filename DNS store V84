@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# اسم شما
+echo "Name: V84"
+
+# کشورهای مورد نظر (Japan, Germany, Iraq, Egypt, Emirates)
+countries=("JP" "DE" "IQ" "EG" "AE")
+
+# تعداد IPهایی که می‌خواهیم
+count=5  # دو تا IPv4 و دو تا IPv6 از هر کشور (مجموعاً ۱۰ IP)
+
+# تابع برای دریافت IPها از یک کشور
+get_ip_info() {
+    local country_code=$1
+    echo "Fetching IP for country: $country_code"
+    
+    # برای هر کشور دو IPv4 و دو IPv6 دریافت کنید
+    for ((i=0; i<count; i++)); do
+        curl -s "https://randommer.io/api/IP/Generate" \
+             -H "X-Api-Key: your_api_key" \
+             -d "IPv=4" \
+             -d "Country=${country_code}"
+    done
+}
+
+# دریافت IP برای هر کشور
+for country in "${countries[@]}"; do
+    get_ip_info $country
+done
